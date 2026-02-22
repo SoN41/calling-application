@@ -1,104 +1,229 @@
 # 🎥 Full-Stack Video Calling Application
 
-A full-stack, role-based video conferencing platform built with the MERN stack (MongoDB, Express, React, Node.js) and powered by ZegoCloud. 
+A full-stack, role-based video conferencing platform built with the MERN stack (**MongoDB, Express, React, Node.js**) and powered by **ZegoCloud**.
 
-This application allows "Hosts" (consultants, doctors, admins) to schedule and manage video meetings, while allowing "Guests" (clients, patients) to securely join validated rooms via a shared Room ID.
+This application allows **Hosts** (consultants, doctors, admins) to schedule and manage video meetings, while allowing **Guests** (clients, patients) to securely join validated rooms via a shared Room ID.
+
+---
 
 ## ✨ Features
 
 * **Role-Based Authentication:** Secure JWT-based login and signup system separating users into "Host" and "Guest" roles.
 * **Host Dashboard:** Hosts can create instant meetings or schedule future meetings. Scheduled meetings are saved to the database and displayed on their dashboard.
-* **Guest Validation:** Guests can only join active, scheduled rooms. The backend validates the Room ID against the MongoDB database before granting access.
+* **Guest Validation:** Guests can only join active, scheduled rooms. The backend validates the Room ID against MongoDB before granting access.
 * **Live Video & Audio:** High-quality, real-time video conferencing powered by ZegoCloud UIKits.
-* **Smart Room Management:** Easy "Copy Room ID" functionality. Rooms are automatically deleted from the database the moment the Host ends the call to keep the schedule clean.
-* **Modern UI:** Responsive, gradient-styled user interface built with React.
+* **Smart Room Management:** Easy "Copy Room ID" functionality. Rooms are automatically deleted from the database when the Host ends the call.
+* **Modern UI:** Responsive, gradient-styled interface built with React.
+
+---
 
 ## 🛠️ Tech Stack
 
-**Frontend:**
-* React (Vite)
-* React Router DOM (for navigation & protected routes)
-* Context API (for state & auth management)
-* ZegoCloud UIKit Prebuilt (for WebRTC video infrastructure)
+### Frontend
 
-**Backend:**
+* React (Vite)
+* React Router DOM (Protected Routes)
+* Context API (State & Auth Management)
+* ZegoCloud UIKit Prebuilt (WebRTC infrastructure)
+
+### Backend
+
 * Node.js & Express.js
-* MongoDB & Mongoose (Database modeling)
-* JSON Web Tokens (JWT) (Authentication)
+* MongoDB & Mongoose
+* JSON Web Tokens (JWT)
 * Bcrypt.js (Password hashing)
+
+---
 
 ## 🚀 Getting Started
 
-Follow these instructions to run the project on your local machine.
+Follow these steps to run the project locally.
 
-### Prerequisites
-* [Node.js](https://nodejs.org/) installed on your machine.
-* A [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) account and cluster.
-* A [ZegoCloud](https://www.zegocloud.com/) account (App ID and Server Secret).
+---
 
-### 1. Clone the repository
+### ✅ Prerequisites
+
+* Node.js installed
+* MongoDB Atlas account & cluster
+* ZegoCloud account (App ID and Server Secret)
+
+---
+
+## ⚠️ IMPORTANT SECURITY NOTICE (Before Pushing to GitHub)
+
+Before running:
+
 ```bash
-git clone [https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git](https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git)
-cd YOUR_REPO_NAME
+git push origin main
+```
 
-2. Backend Setup
-Bash
+**Make sure your ZegoCloud credentials are NOT hardcoded in your frontend files.**
+
+If your `appID` or `serverSecret` are inside:
+
+```
+frontend/src/pages/Video_Room.jsx
+```
+
+🚨 **STOP and move them into environment variables first.**
+
+### Why?
+
+If you push hardcoded credentials to GitHub:
+
+* Bots can scrape your keys
+* Someone can abuse your ZegoCloud account
+* You may incur unexpected charges
+* Your account could be compromised
+
+---
+
+## 🔐 How to Secure Your ZegoCloud Credentials
+
+### 1️⃣ Create a `.env` file in the frontend folder
+
+```
+frontend/.env
+```
+
+Add:
+
+```env
+VITE_ZEGO_APP_ID=your_app_id_here
+VITE_ZEGO_SERVER_SECRET=your_server_secret_here
+```
+
+---
+
+### 2️⃣ Update `Video_Room.jsx`
+
+Replace hardcoded values with:
+
+```javascript
+const appID = import.meta.env.VITE_ZEGO_APP_ID;
+const serverSecret = import.meta.env.VITE_ZEGO_SERVER_SECRET;
+```
+
+---
+
+### 3️⃣ Add `.env` to `.gitignore`
+
+Make sure your `.gitignore` contains:
+
+```
+.env
+```
+
+---
+
+### 4️⃣ If You Already Pushed Keys
+
+If credentials were already pushed:
+
+1. Immediately regenerate your ZegoCloud Server Secret from the dashboard.
+2. Remove secrets from the repository.
+3. Commit the changes.
+4. Push again.
+
+---
+
+## 🖥️ Installation
+
+### 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
+cd YOUR_REPO_NAME
+```
+
+---
+
+## 🔹 Backend Setup
+
+```bash
 cd backend
 npm install
-Create a .env file in the backend folder and add the following variables:
+```
 
-Code snippet
+Create a `.env` file inside `backend/`:
+
+```env
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_generated_random_secret
-Start the backend server:
+JWT_SECRET=your_random_secret
+```
 
-Bash
+Start backend server:
+
+```bash
 npm run dev
-3. Frontend Setup
-Open a new terminal window and navigate to the frontend directory:
+```
 
-Bash
+---
+
+## 🔹 Frontend Setup
+
+Open a new terminal:
+
+```bash
 cd frontend
 npm install
-Note: Make sure to securely provide your ZegoCloud credentials via environment variables before deploying.
-
-Start the React development server:
-
-Bash
 npm run dev
-💻 Usage
-Open http://localhost:5173 in your browser.
+```
 
-Sign up as a Host: Create an account selecting the "Host" role. You can schedule meetings, start instant rooms, and copy Room IDs.
+Visit:
 
-Sign up as a Guest: Open an incognito window and create a "Guest" account. You will only see the option to join a room.
+```
+http://localhost:5173
+```
 
-Paste a valid Room ID generated by the Host to join the video call!
+---
 
-📁 Project Structure
-This project uses a modular MVC-style architecture for the backend to ensure scalability.
+## 💻 Usage
 
-Plaintext
+### 👤 Host
+
+* Sign up as **Host**
+* Create instant meetings or schedule future meetings
+* Copy and share Room ID
+
+### 👥 Guest
+
+* Sign up as **Guest**
+* Enter valid Room ID
+* Join active scheduled meeting
+
+---
+
+## 📁 Project Structure
+
+```
 ├── backend/
-│   ├── models/          # Mongoose Database Schemas (User, Meeting)
-│   ├── routes/          # Express API Endpoints (auth, meetings)
-│   ├── .env             # Hidden environment variables
-│   └── server.js        # Entry point & setup
+│   ├── models/
+│   ├── routes/
+│   ├── .env
+│   └── server.js
 ├── frontend/
 │   ├── src/
-│   │   ├── components/  # Reusable UI components (ProtectedRoutes)
-│   │   ├── context/     # React Context (AuthContext)
-│   │   ├── pages/       # Main views (Login, Signup, ZegoCloud, Video_Room)
-│   │   ├── App.jsx      # Route definitions
-│   │   └── main.jsx     # React DOM render
+│   │   ├── components/
+│   │   ├── context/
+│   │   ├── pages/
+│   │   ├── App.jsx
+│   │   └── main.jsx
 │   └── package.json
 └── README.md
-🤝 Contributing
+```
+
+---
+
+## 🤝 Contributing
+
 Contributions, issues, and feature requests are welcome!
 
-📝 License
+---
+
+## 📝 License
+
 This project is open source and available under the MIT License.
 
-
-Before you run your `git push` command to send this up to GitHub, did you already move your ZegoCloud `appID` and `serverSecret` into a `.env` file, or are they still hardcoded in your `Video_Room.jsx` file? (If they are hardcoded, let's hide them first so bots don't scrape your keys!)
+---

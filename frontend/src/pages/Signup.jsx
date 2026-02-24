@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useAuth } from "../context/AuthContext"; // Ensure correct import path
+import { useAuth } from "../context/AuthContext";
 
 const Signup = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [role, setRole] = useState("Guest"); // Default to Guest
+  const [role, setRole] = useState("Guest");
   const [error, setError] = useState("");
   
   const { register } = useAuth();
@@ -19,7 +19,6 @@ const Signup = () => {
       return setError("Passwords do not match!");
     }
 
-    // ADD 'await' RIGHT HERE 👇
     const result = await register(username, password, role);
     
     if (result.success) {
@@ -32,55 +31,68 @@ const Signup = () => {
   return (
     <div className="home-container">
       <div className="home-card">
-        <h1 className="home-title">📝 Sign Up</h1>
-        <p className="home-subtitle">Create an account to join video rooms</p>
+        <h1 className="home-title">Create Account</h1>
+        <p className="home-subtitle">Sign up to join video rooms</p>
         
-        {error && <p style={{ color: "red", fontSize: "14px", marginBottom: "10px" }}>{error}</p>}
+        {error && <div className="error-message">{error}</div>}
 
         <form onSubmit={handleSignup}>
-          <input
-            type="text"
-            placeholder="Choose a Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className="home-input"
-            required
-          />
-          <input
-            type="password"
-            placeholder="Create Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="home-input"
-            required
-            minLength="6"
-          />
-          <input
-            type="password"
-            placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            className="home-input"
-            required
-          />
-          
-          {/* Role Selection Dropdown */}
-          <select 
-            className="home-input" 
-            value={role} 
-            onChange={(e) => setRole(e.target.value)}
-          >
-            <option value="Guest">Guest (Client/Patient)</option>
-            <option value="Host">Host (Consultant/Admin)</option>
-          </select>
+          <div className="form-group">
+            <label className="form-label">Username</label>
+            <input
+              type="text"
+              placeholder="Choose a username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="home-input"
+              required
+            />
+          </div>
 
-          <button type="submit" className="join-button" style={{ background: "#22c55e", marginBottom: "15px" }}>
+          <div className="form-group">
+            <label className="form-label">Password</label>
+            <input
+              type="password"
+              placeholder="Create a password (min. 6 chars)"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="home-input"
+              required
+              minLength="6"
+            />
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">Confirm Password</label>
+            <input
+              type="password"
+              placeholder="Confirm your password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="home-input"
+              required
+            />
+          </div>
+          
+          <div className="form-group">
+            <label className="form-label">Account Role</label>
+            <select 
+              className="home-input" 
+              value={role} 
+              onChange={(e) => setRole(e.target.value)}
+            >
+              <option value="Guest">Guest (Client/Patient)</option>
+              <option value="Host">Host (Consultant/Admin)</option>
+            </select>
+          </div>
+
+          <button type="submit" className="join-button">
             Create Account
           </button>
         </form>
 
-        <p style={{ fontSize: "14px", color: "#666" }}>
-          Already have an account? <Link to="/login" style={{ color: "#667eea", textDecoration: "none", fontWeight: "bold" }}>Login</Link>
+        <p className="auth-footer">
+          Already have an account? <Link to="/login" className="auth-link">Log In</Link>
         </p>
       </div>
     </div>

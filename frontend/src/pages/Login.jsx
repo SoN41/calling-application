@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom"; // Add Link here
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
@@ -9,11 +9,9 @@ const Login = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  // 1. Add 'async' here
   const handleLogin = async (e) => { 
     e.preventDefault();
     
-    // 2. Add 'await' here so React waits for the database to verify the user
     const result = await login(username, password); 
     
     if (result.success) {
@@ -26,36 +24,43 @@ const Login = () => {
   return (
     <div className="home-container">
       <div className="home-card">
-        <h1 className="home-title">🔒 Login</h1>
-        <p className="home-subtitle">Sign in to access video rooms</p>
+        <h1 className="home-title">Welcome Back</h1>
+        <p className="home-subtitle">Sign in to access your video rooms</p>
         
-        {error && <p style={{ color: "red", fontSize: "14px", marginBottom: "10px" }}>{error}</p>}
+        {error && <div className="error-message">{error}</div>}
 
         <form onSubmit={handleLogin}>
-          <input
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className="home-input"
-            required
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="home-input"
-            required
-          />
-          <button type="submit" className="join-button" style={{ marginBottom: "15px" }}>
+          <div className="form-group">
+            <label className="form-label">Username</label>
+            <input
+              type="text"
+              placeholder="Enter your username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="home-input"
+              required
+            />
+          </div>
+          
+          <div className="form-group">
+            <label className="form-label">Password</label>
+            <input
+              type="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="home-input"
+              required
+            />
+          </div>
+
+          <button type="submit" className="join-button">
             Sign In
           </button>
         </form>
 
-        {/* Added Link to Signup Page */}
-        <p style={{ fontSize: "14px", color: "#666" }}>
-          Don't have an account? <Link to="/signup" style={{ color: "#667eea", textDecoration: "none", fontWeight: "bold" }}>Sign Up</Link>
+        <p className="auth-footer">
+          Don't have an account? <Link to="/signup" className="auth-link">Sign Up</Link>
         </p>
       </div>
     </div>

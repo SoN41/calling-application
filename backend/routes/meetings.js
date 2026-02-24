@@ -1,5 +1,5 @@
 const express = require("express");
-const meeting = require("../models/Meeting");
+const Meeting = require("../models/Meeting"); 
 
 const router = express.Router();
 
@@ -7,10 +7,11 @@ const router = express.Router();
 router.post("/", async (req, res) => {
   try {
     const { title, roomId, scheduledAt, hostName } = req.body;
-    const newMeeting = new meeting({ title, roomId, scheduledAt, hostName });
+    const newMeeting = new Meeting({ title, roomId, scheduledAt, hostName }); 
     await newMeeting.save();
     res.status(201).json(newMeeting);
   } catch (error) {
+    console.error("🔥 Error saving meeting:", error);
     res.status(500).json({ message: "Error scheduling meeting" });
   }
 });
@@ -21,6 +22,7 @@ router.get("/", async (req, res) => {
     const meetings = await Meeting.find().sort({ scheduledAt: 1 });
     res.json(meetings);
   } catch (error) {
+    console.error("🔥 Error fetching meetings:", error);
     res.status(500).json({ message: "Error fetching meetings" });
   }
 });
@@ -34,6 +36,7 @@ router.get("/:roomId", async (req, res) => {
     }
     res.json(meeting);
   } catch (error) {
+    console.error("🔥 Error checking room:", error);
     res.status(500).json({ message: "Server error checking room" });
   }
 });
@@ -47,6 +50,7 @@ router.delete("/:roomId", async (req, res) => {
     }
     res.json({ message: "Meeting successfully ended and deleted" });
   } catch (error) {
+    console.error("🔥 Error deleting meeting:", error);
     res.status(500).json({ message: "Error deleting meeting" });
   }
 });

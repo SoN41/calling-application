@@ -294,3 +294,149 @@ body {
   background-color: #1e293b; /* Dark background before video loads */
   overflow: hidden;
 }
+
+/* Layout Wrapper */
+.layout-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.layout-main {
+  flex: 1; /* Pushes the footer to the bottom */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header Styles */
+.app-header {
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-brand {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brand-icon {
+  color: #10b981; /* Emerald green logo mark */
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-welcome {
+  font-size: 14px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.header-link {
+  color: #475569;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15px;
+  transition: color 0.2s;
+}
+
+.header-link:hover {
+  color: #6366f1;
+}
+
+.header-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.signup-btn {
+  background-color: #6366f1;
+  color: white;
+}
+
+.signup-btn:hover {
+  background-color: #4f46e5;
+}
+
+.logout-btn {
+  background-color: #f1f5f9;
+  color: #ef4444;
+}
+
+.logout-btn:hover {
+  background-color: #fee2e2;
+}
+
+/* Footer Styles */
+.app-footer {
+  background-color: #ffffff;
+  border-top: 1px solid #e2e8f0;
+  padding: 24px;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+/* IMPORTANT FIX: Update your existing container CSS */
+/* Change height to min-height in your existing .home-container so it plays nice with the layout */
+.home-container {
+  min-height: 100%; /* Changed from 100vh */
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+.dashboard-container {
+  min-height: 100%; /* Changed from 100vh */
+  /* Keep your other dashboard-container styles the same */
+}
+
+.header-logo {
+  height: 60px; /* Change this number to make the logo bigger or smaller */
+  width: auto;
+  object-fit: contain;
+  border-radius: 4px; /* Optional: smooths out the corners if it's a square image */
+}
+
+/* Active state for NavLinks (shows users which page they are currently on) */
+.header-link.active {
+  color: #6366f1; /* Indigo color to match your theme */
+  border-bottom: 2px solid #6366f1;
+  padding-bottom: 2px;
+}
+
+/* A neat vertical divider to separate menu items from auth buttons */
+.header-divider {
+  width: 1px;
+  height: 24px;
+  background-color: #e2e8f0;
+  margin: 0 10px;
+}

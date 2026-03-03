@@ -3,7 +3,7 @@ const Meeting = require("../models/Meeting");
 
 const router = express.Router();
 
-// Create a new meeting (/api/meetings)
+// 1. Create a new meeting (/api/meetings)
 router.post("/", async (req, res) => {
   try {
     const { title, roomId, scheduledAt, hostName } = req.body;
@@ -16,10 +16,11 @@ router.post("/", async (req, res) => {
   }
 });
 
-// Get all meetings (/api/meetings)
+// 2. Get all ACTIVE meetings for the Dashboard (/api/meetings)
 router.get("/", async (req, res) => {
   try {
-    const meetings = await Meeting.find().sort({ scheduledAt: 1 });
+    // Only fetch meetings that are still "Scheduled" so completed ones hide from the dashboard
+    const meetings = await Meeting.find({ status: "Scheduled" }).sort({ scheduledAt: 1 });
     res.json(meetings);
   } catch (error) {
     console.error("🔥 Error fetching meetings:", error);
@@ -27,7 +28,26 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Check if a room exists (/api/meetings/:roomId)
+// 3. 🚨 ADDED: Get Meeting History (/api/meetings/history/:username)
+// MUST be placed before the /:roomId route!
+router.get("/history/:username", async (req, res) => {
+  try {
+    const { username } = req.params;
+    
+    // Find meetings where this user was involved AND the status is Completed
+    const pastMeetings = await Meeting.find({
+      $or: [{ hostName: username }, { guestName: username }],
+      status: "Completed" 
+    }).sort({ scheduledAt: -1 }); // Sort by newest first
+
+    res.json(pastMeetings);
+  } catch (error) {
+    console.error("🔥 Error fetching history:", error);
+    res.status(500).json({ message: "Server error fetching history" });
+  }
+});
+
+// 4. Check if a room exists (/api/meetings/:roomId)
 router.get("/:roomId", async (req, res) => {
   try {
     const meeting = await Meeting.findOne({ roomId: req.params.roomId });
@@ -41,17 +61,23 @@ router.get("/:roomId", async (req, res) => {
   }
 });
 
-// Delete a meeting (/api/meetings/:roomId)
+// 5. 🚨 FIXED: Update to "Completed" instead of Deleting (/api/meetings/:roomId)
 router.delete("/:roomId", async (req, res) => {
   try {
-    const deletedMeeting = await Meeting.findOneAndDelete({ roomId: req.params.roomId });
-    if (!deletedMeeting) {
+    // Changed findOneAndDelete to findOneAndUpdate!
+    const completedMeeting = await Meeting.findOneAndUpdate(
+      { roomId: req.params.roomId },
+      { status: "Completed" }, // Mark it as completed instead of destroying it
+      { new: true }
+    );
+
+    if (!completedMeeting) {
       return res.status(404).json({ message: "Meeting not found" });
     }
-    res.json({ message: "Meeting successfully ended and deleted" });
+    res.json({ message: "Meeting successfully ended and saved to history" });
   } catch (error) {
-    console.error("🔥 Error deleting meeting:", error);
-    res.status(500).json({ message: "Error deleting meeting" });
+    console.error("🔥 Error ending meeting:", error);
+    res.status(500).json({ message: "Error ending meeting" });
   }
 });
 

@@ -11,7 +11,10 @@ const userRoutes = require("./routes/userRoutes");
 
 const app = express();
 app.use(cors({
-  origin: "https://calling-application-8vtni730s-sujals-projects-567a4c95.vercel.app",
+  origin: [
+    "https://calling-application.vercel.app",       // ✅ production URL
+    /https:\/\/calling-application.*\.vercel\.app/  // ✅ all preview URLs
+  ],
   credentials: true
 }));
 app.use(express.json());

@@ -7,9 +7,13 @@ require("dotenv").config();
 // Import Routes
 const authRoutes = require("./routes/auth");
 const meetingRoutes = require("./routes/meetings");
+const userRoutes = require("./routes/userRoutes");
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: "https://calling-application-8vtni730s-sujals-projects-567a4c95.vercel.app/",
+  credentials: true
+}));
 app.use(express.json());
 
 // Connect to MongoDB

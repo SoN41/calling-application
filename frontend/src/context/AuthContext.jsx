@@ -12,12 +12,15 @@ export const AuthProvider = ({ children }) => {
   const register = async (username, password, role) => {
     try {
       // THIS is what actually talks to your backend!
-      const response = await fetch("http://localhost:5000/api/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password, role }),
-      });
-      
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/signup`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password, role }),
+        }
+      );
+
       const data = await response.json();
 
       if (!response.ok) {
@@ -28,7 +31,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
       setUser(data.user);
-      
+
       return { success: true };
     } catch (error) {
       console.log(error);
@@ -38,12 +41,14 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (username, password) => {
     try {
-      const response = await fetch("http://localhost:5000/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
-      
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/login`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password }),
+        });
+
       const data = await response.json();
 
       if (!response.ok) {
@@ -53,7 +58,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
       setUser(data.user);
-      
+
       return { success: true };
     } catch (error) {
       console.log(error);

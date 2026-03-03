@@ -23,6 +23,9 @@ mongoose.connect(process.env.MONGO_URI)
 
 // Mount Routes
 // Note: We mount authRoutes at "/api" so the endpoints remain /api/signup and /api/login
+app.get('/', (req, res) => {
+  res.status(200).json({ message: 'Backend is running!' });
+});
 app.use("/api", authRoutes); 
 app.use("/api/meetings", meetingRoutes);
 

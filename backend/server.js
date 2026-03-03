@@ -1,4 +1,4 @@
-// server.js
+
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -11,7 +11,7 @@ const userRoutes = require("./routes/userRoutes");
 
 const app = express();
 app.use(cors({
-  origin: "https://calling-application-8vtni730s-sujals-projects-567a4c95.vercel.app/",
+  origin: "https://calling-application-8vtni730s-sujals-projects-567a4c95.vercel.app",
   credentials: true
 }));
 app.use(express.json());

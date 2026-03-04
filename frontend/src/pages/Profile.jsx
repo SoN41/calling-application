@@ -20,7 +20,7 @@ const Profile = () => {
 
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/users/profile/${user.username}`);
+          `${import.meta.env.ZEGO_VITE_API_URL}/api/users/profile/${user.username}`);
         if (response.ok) {
           const data = await response.json();
           setFullName(data.fullName || "");
@@ -46,7 +46,7 @@ const Profile = () => {
     setIsSaving(true);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/profile`, {
+      const response = await fetch(`${import.meta.env.ZEGO_VITE_API_URL}/api/users/profile`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

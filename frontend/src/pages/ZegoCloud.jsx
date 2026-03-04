@@ -16,7 +16,7 @@ const ZegoCloud = () => {
   useEffect(() => {
     const fetchMeetings = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/meetings`);
+        const response = await fetch(`${import.meta.env.ZEGO_VITE_API_URL}/api/meetings`);
         if (response.ok) {
           const data = await response.json();
           const scheduledOnly = data.filter(meeting => meeting.title !== "Instant Meeting");
@@ -33,7 +33,7 @@ const ZegoCloud = () => {
   const createRoom = async () => {
     const randomId = Math.random().toString(36).substring(2, 8);
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/meetings`, {
+      const response = await fetch(`${import.meta.env.ZEGO_VITE_API_URL}/api/meetings`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -58,7 +58,7 @@ const ZegoCloud = () => {
   const joinRoom = async () => {
     if (!value.trim()) return alert("Please enter a Room ID");
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/meetings/${value}`);
+      const response = await fetch(`${import.meta.env.ZEGO_VITE_API_URL}/api/meetings/${value}`);
       if (response.ok) {
         navigate(`/room/${value}`);
       } else {
@@ -76,7 +76,7 @@ const ZegoCloud = () => {
     const randomId = Math.random().toString(36).substring(2, 8);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/meetings`, {
+      const response = await fetch(`${import.meta.env.ZEGO_VITE_API_URL}/api/meetings`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

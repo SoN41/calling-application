@@ -8,7 +8,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const { login } = useAuth();
   const navigate = useNavigate();
-  console.log("API URL:", import.meta.env.VITE_API_URL);
+  console.log("API URL:", import.meta.env.ZEGO_VITE_API_URL);
 
   const handleLogin = async (e) => { 
     e.preventDefault();

@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
     try {
       // THIS is what actually talks to your backend!
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/signup`,
+        `${import.meta.env.ZEGO_VITE_API_URL}/api/signup`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (username, password) => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/login`,
+        `${import.meta.env.ZEGO_VITE_API_URL}/api/login`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

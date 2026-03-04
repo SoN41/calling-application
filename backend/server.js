@@ -12,13 +12,9 @@ const userRoutes = require("./routes/userRoutes");
 const app = express();
 app.use(cors({
   origin: [
-<<<<<<< HEAD
-    "https://calling-application.vercel.app",       // ✅ production URL
-    /https:\/\/calling-application.*\.vercel\.app/  // ✅ all preview URLs
-=======
-    "https://calling-application.vercel.app",        // production
-    /https:\/\/calling-application-.*\.vercel\.app/  // all preview URLs
->>>>>>> 3b1fd7c7ccc172380fcc7d4a43ccd6deffbf0a99
+    "https://calling-application.vercel.app",  
+    "http://localhost:5173",
+    /https:\/\/calling-application.*\.vercel\.app/
   ],
   credentials: true
 }));

@@ -15,7 +15,7 @@ const MeetingHistory = () => {
 
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/meetings/history/${user.username}`);
+          `${import.meta.env.ZEGO_VITE_API_URL}/api/meetings/history/${user.username}`);
         if (response.ok) {
           const data = await response.json();
           setPastMeetings(data);

@@ -48,7 +48,7 @@ const Video_Room = () => {
         onLeaveRoom: async () => {
           if (user?.role === "Host") {
             try {
-              await fetch(`${import.meta.env.VITE_API_URL}/api/meetings/${id}`, {
+              await fetch(`${import.meta.env.ZEGO_VITE_API_URL}/api/meetings/${id}`, {
                 method: "DELETE",
               });
               console.log("Room deleted from database.");
